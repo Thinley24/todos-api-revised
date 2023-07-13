@@ -47,5 +47,8 @@ group :development do
   # gem "spring"
 end
 
-
+# for authentication
 gem "devise", "~> 4.9"
+
+# for authorization
+gem "pundit", "~> 2.3"
