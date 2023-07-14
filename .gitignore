@@ -28,5 +28,6 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
-!/.idea/todos.iml
+!/.idea/*
 !/ssh_public_key.pub
+!/Desktop
