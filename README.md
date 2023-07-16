@@ -9,6 +9,6 @@ N/A
 
 
 
-_Not sure if authentication is implemented by just using Devise gem _
+_Not sure if authentication is implemented by just using Devise gem_
 
 
