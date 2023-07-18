@@ -47,7 +47,7 @@ group :development do
   # gem "spring"
 end
 
-gem "devise", "~> 4.9"
+gem "devise"
 
 gem "pundit", "~> 2.3"
 
