@@ -12,14 +12,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /registrations
-  def create
-    @user = User.create!(registration_params)
-    if @user.save
-      render json: {message: "Account Created Successfully."}, status: :created
-    else
-      render json: @user.errors, status: :unprocessable_entity
-    end
-  end
+  # def create
+  #   @user = User.create!(registration_params)
+  #   if @user.save
+  #     render json: {message: "Account Created Successfully."}, status: :created
+  #   else
+  #     render json: @user.errors, status: :unprocessable_entity
+  #   end
+  # end
 
   # GET /resource/edit
   # def edit
@@ -67,12 +67,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super(resource)
   # end
 
-    private
-
-    def registration_params
-      params.permit(
-        :email,
-        :encrypted_password
-      )
-    end
+  # private
+  #
+  # def registration_params
+  #   params.permit(
+  #     :email,
+  #     :encrypted_password
+  #   )
+  # end
 end

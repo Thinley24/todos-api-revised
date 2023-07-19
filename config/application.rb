@@ -27,6 +27,5 @@ module Todos
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore
     config.middleware.use config.session_store, config.session_options
-
   end
 end
