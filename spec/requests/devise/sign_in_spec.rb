@@ -18,4 +18,15 @@ RSpec.describe 'User Authentication Sign in', type: :request do
       end
     end
   end
+
+  describe 'POST /users/sign_in' do
+    context 'with invalid credentials' do
+      it 'returns a JSON response with a status of 401 and an error message' do
+        post '/users/sign_in', params: { user: { email: 'invalid@example.com', password: 'wrong_password' } }
+        expect(response).to have_http_status(401)
+        expect(json_response).to have_key('error')
+        expect(json_response['error']).to eq('Invalid Email or password.')
+      end
+    end
+  end
 end

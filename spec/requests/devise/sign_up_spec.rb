@@ -15,4 +15,19 @@ RSpec.describe 'User Authentication Sign up', type: :request do
       end
     end
   end
+
+  describe 'POST /users' do
+    context 'with invalid credentials' do
+      it 'returns a JSON response with a status of 422 and an error message' do
+        post '/users', params: { user: { email: '', password: '' } }
+        # binding.pry
+        expect(response).to have_http_status(422) # unprocessable entity
+        expect(json_response).to have_key('errors')
+        # binding.pry
+        expect(json_response['errors']).to have_key('email')
+        expect(json_response['errors']['email']).to include("can't be blank")
+        expect(json_response['errors']['password']).to include("can't be blank")
+      end
+    end
+  end
 end
