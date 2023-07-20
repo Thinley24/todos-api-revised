@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TasksController < ApplicationController
   before_action :authenticate_user!
 
@@ -6,7 +8,3 @@ class TasksController < ApplicationController
     render json: @user
   end
 end
-
-
-
-

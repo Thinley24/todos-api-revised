@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.configure do |config|
   # before the entire test suite runs, clear the test database
   config.before(:suite) do
