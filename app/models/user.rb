@@ -7,5 +7,6 @@ class User < ApplicationRecord
   # model association
   has_many :tasks, class_name: 'Task', foreign_key: :created_by
   # validations
-  validates :email, :encrypted_password, presence: true
+  validates_presence_of :email, uniqueness: true
+  validates_presence_of :encrypted_password
 end
