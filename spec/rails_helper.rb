@@ -69,6 +69,10 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include Devise::Test::IntegrationHelpers, type: :request
+
+  config.before(:suite) do
+    Rails.application.load_seed
+  end
 end
 
 Shoulda::Matchers.configure do |config|

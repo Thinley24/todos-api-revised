@@ -5,16 +5,26 @@ require 'rails_helper'
 RSpec.describe 'User Authentication Sign in', type: :request do
   include Response
   describe 'POST /users/sign_in' do
-    context 'with valid credentials' do
-      let(:user) { create(:random_user) } # User.create({})
+    context 'with valid credentials for a normal user' do
+      let!(:normal_user) { create(:random_user, :normal) } # User.create({})
       it 'returns a JSON response with a status of 201 and a success message' do
-        # user = User.create(email: 'kinley606@gmail.com', password: 'kinley606')
 
-        post '/users/sign_in', params: { user: { email: user.email, password: user.password } }
-
+        post '/users/sign_in', params: { user: { email: normal_user.email, password: normal_user.password } }
+        puts "JSON Response: #{json_response.inspect}"
         expect(response).to have_http_status(201)
         expect(json_response).to have_key('id')
-        expect(json_response['email']).to eq(user.email)
+        expect(json_response['email']).to eq(normal_user.email)
+      end
+    end
+
+    context 'with valid credentials for an admin user' do
+      let!(:admin_user) { create(:random_user, :admin) } # Admin user
+      it 'returns a JSON response with a status of 201 and a success message' do
+        post '/users/sign_in', params: { user: { email: admin_user.email, password: admin_user.password } }
+        puts "JSON Response: #{json_response.inspect}"
+        expect(response).to have_http_status(201)
+        expect(json_response).to have_key('id')
+        expect(json_response['email']).to eq(admin_user.email)
       end
     end
   end

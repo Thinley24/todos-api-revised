@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+include Response
 
 module Users
   class RegistrationsController < Devise::RegistrationsController
@@ -13,14 +14,20 @@ module Users
     # end
 
     # POST /registrations
-    # def create
-    #   @user = User.create!(registration_params)
-    #   if @user.save
-    #     render json: {message: "Account Created Successfully."}, status: :created
-    #   else
-    #     render json: @user.errors, status: :unprocessable_entity
-    #   end
-    # end
+    def create
+      # binding.pry
+      @user = User.new(registration_params)
+      if @user.save
+        render json: {
+          id: @user.id,
+          email: @user.email,
+          password: @user.password,
+          role_id: @user.role_id
+        }, status: :created
+      else
+        render json: { errors: @user.errors.full_messages.join(', ') }, status: :unprocessable_entity
+      end
+    end
 
     # GET /resource/edit
     # def edit
@@ -68,13 +75,14 @@ module Users
     #   super(resource)
     # end
 
-    # private
-    #
-    # def registration_params
-    #   params.permit(
-    #     :email,
-    #     :encrypted_password
-    #   )
-    # end
+    private
+
+    def registration_params
+      params.require(:user).permit(
+        :email,
+        :password,
+        :role_id
+      )
+    end
   end
 end
