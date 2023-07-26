@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 include Response
 
 module Users
@@ -15,15 +16,9 @@ module Users
 
     # POST /registrations
     def create
-      # binding.pry
       @user = User.new(registration_params)
       if @user.save
-        render json: {
-          id: @user.id,
-          email: @user.email,
-          password: @user.password,
-          role_id: @user.role_id
-        }, status: :created
+        render json: @user.as_json, status: :created
       else
         render json: { errors: @user.errors.full_messages.join(', ') }, status: :unprocessable_entity
       end
