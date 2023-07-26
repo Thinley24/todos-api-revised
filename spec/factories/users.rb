@@ -6,10 +6,12 @@ FactoryBot.define do
     password { Faker::Internet.password }
 
     trait :normal do
-      association :role, factory: :role
+      role { Role.find_by(name: 'User') }
+      # association :role, factory: :role
     end
     trait :admin do
-      association :role, factory: [:role, :admin]
+      role { Role.find_by(name: 'Admin') }
+      # association :role, factory: [:role, :admin]
     end
   end
 end
