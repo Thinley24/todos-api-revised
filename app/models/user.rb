@@ -7,9 +7,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   # model association
-  has_many :tasks, class_name: 'Task', foreign_key: :created_by
   belongs_to :role
+  has_many :created_tasks, class_name: 'Task', foreign_key: 'creator_id', dependent: :destroy
+  has_many :assigned_tasks, class_name: 'Task', foreign_key: 'assignee_id', dependent: :nullify
   # validations
-  validates_presence_of :email, uniqueness: true
-  validates_presence_of :encrypted_password, uniqueness: true
+  validates_presence_of :email, :encrypted_password, uniqueness: true
+  validates_presence_of :role_id
 end

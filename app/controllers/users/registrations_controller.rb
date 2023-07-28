@@ -18,7 +18,7 @@ module Users
     def create
       @user = User.new(registration_params)
       if @user.save
-        render json: @user.as_json, status: :created
+        render json: @user, status: :created
       else
         render json: { errors: @user.errors.full_messages.join(', ') }, status: :unprocessable_entity
       end
