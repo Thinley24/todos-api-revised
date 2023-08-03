@@ -4,6 +4,7 @@ class ApplicationController < ActionController::API
   include Pundit::Authorization
   include ActionController::Cookies
   include ActionController::MimeResponds
+  include Pagy::Backend
 
   respond_to :json
 

@@ -3,10 +3,11 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
 
-  # def index
-  #   @task = current_user.tasks
-  #   json_response(@task)
-  # end
+  def index
+    # @task = current_user.tasks
+    @pagy, @tasks = pagy(Task.includes(:creator, :assignee, :parent_task, :subtasks).all)
+    render json: @tasks
+  end
 
   def create
     @task = Task.new(task_params)

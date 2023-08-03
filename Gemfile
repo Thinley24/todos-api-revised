@@ -65,3 +65,5 @@ gem 'pundit', '~> 2.3'
 gem 'rubocop', '~> 1.54.2'
 
 gem 'active_model_serializers'
+
+gem 'pagy'
