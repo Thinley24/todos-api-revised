@@ -2,6 +2,7 @@
 
 class TasksController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
+  before_action :set_task, only: %i[show update destroy]
 
   def index
     @pagy, @tasks = pagy(Task.includes(:creator, :assignee, :parent_task, :subtasks).all)
@@ -9,7 +10,6 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.find(params[:id])
     authorize @task
     render json: @task
   end
@@ -25,7 +25,6 @@ class TasksController < ApplicationController
   end
 
   def update
-    @task = Task.find(params[:id])
     authorize @task
     if @task.update(task_params)
       render json: @task
@@ -35,7 +34,6 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.find(params[:id])
     authorize @task
     @task.destroy
     head :no_content
@@ -53,5 +51,9 @@ class TasksController < ApplicationController
       :assignee_id,
       subtasks_attributes: %i[title description due_date status creator_id assignee_id]
     )
+  end
+
+  def set_task
+    @task = Task.find(params[:id])
   end
 end
