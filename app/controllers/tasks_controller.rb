@@ -24,6 +24,7 @@ class TasksController < ApplicationController
     end
   end
 
+  rescue_from Pundit::NotAuthorizedError, with: :unauthorized_user
   def update
     authorize @task
     if @task.update(task_params)
@@ -55,5 +56,9 @@ class TasksController < ApplicationController
 
   def set_task
     @task = Task.find(params[:id])
+  end
+
+  def unauthorized_user(exception)
+    render json: { error: exception.message }, status: :forbidden
   end
 end

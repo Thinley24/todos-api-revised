@@ -14,7 +14,9 @@ class TaskPolicy < ApplicationPolicy
   end
 
   def update?
-    user == record.creator
+    raise Pundit::NotAuthorizedError, 'You are not authorized to update this task' unless user == record.creator
+
+    true
   end
 
   def destroy?
