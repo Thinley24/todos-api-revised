@@ -7,11 +7,9 @@ FactoryBot.define do
 
     trait :normal do
       role { Role.find_by(name: 'User') }
-      # association :role, factory: :role
     end
     trait :admin do
       role { Role.find_by(name: 'Admin') }
-      # association :role, factory: [:role, :admin]
     end
   end
 end

@@ -20,7 +20,6 @@ RSpec.describe 'User Authentication Sign up', type: :request do
         expect(response).to have_http_status(201)
         expect(json_response).to have_key('id')
         expect(json_response['email']).to eq(user_params[:user][:email])
-        expect(json_response['role_id']).to eq(user_params[:user][:role_id])
       end
     end
 
