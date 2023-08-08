@@ -8,5 +8,9 @@ FactoryBot.define do
     status { 'pending' }
     creator { nil }
     assignee { nil }
+
+    trait :subtask do
+      parent_task { nil }
+    end
   end
 end

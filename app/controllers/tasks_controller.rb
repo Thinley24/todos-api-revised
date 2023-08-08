@@ -5,8 +5,8 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show update destroy]
 
   def index
-    @pagy, @tasks = pagy(Task.includes(:creator, :assignee, :parent_task, :subtasks).all)
-    render json: @tasks
+    @pagy, @tasks = pagy(load_tasks)
+    render json: { tasks: @tasks, meta: @pagy }
   end
 
   def show
@@ -18,9 +18,9 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
     authorize @task
     if @task.save
-      render json: @task, status: :created, include: ['subtasks']
+      created_response(@task)
     else
-      render json: { errors: @task.errors.full_messages.join(', ') }, status: :unprocessable_entity
+      error_response(@task.errors.full_messages)
     end
   end
 
@@ -50,6 +50,7 @@ class TasksController < ApplicationController
       :status,
       :creator_id,
       :assignee_id,
+      :parent_task_id,
       subtasks_attributes: %i[title description due_date status creator_id assignee_id]
     )
   end
@@ -60,5 +61,17 @@ class TasksController < ApplicationController
 
   def unauthorized_user(exception)
     render json: { error: exception.message }, status: :forbidden
+  end
+  
+  def load_tasks
+    Task.includes(:creator, :assignee, :parent_task, :subtasks).all
+  end
+
+  def created_response(task)
+    render json: task, status: :created, include: ['subtasks']
+  end
+
+  def error_response(errors, status = :unprocessable_entity)
+    render json: { errors: errors.join(', ') }, status: status
   end
 end
