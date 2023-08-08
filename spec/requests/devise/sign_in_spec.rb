@@ -16,7 +16,7 @@ RSpec.describe 'User Authentication Sign in', type: :request do
         }
       end
       it 'returns a JSON response with a status of 201 and a success message' do
-        post '/users/sign_in', params: params
+        post('/users/sign_in', params:)
         expect(response).to have_http_status(201)
         expect(json_response).to have_key('id')
         expect(json_response['email']).to eq(normal_user.email)
@@ -34,7 +34,7 @@ RSpec.describe 'User Authentication Sign in', type: :request do
         }
       end
       it 'returns a JSON response with a status of 201 and a success message' do
-        post '/users/sign_in', params: params
+        post('/users/sign_in', params:)
         expect(response).to have_http_status(201)
         expect(json_response).to have_key('id')
         expect(json_response['email']).to eq(admin_user.email)
@@ -53,7 +53,7 @@ RSpec.describe 'User Authentication Sign in', type: :request do
         }
       end
       it 'returns a JSON response with a status of 401 and an error message' do
-        post '/users/sign_in', params: params
+        post('/users/sign_in', params:)
         expect(response).to have_http_status(401)
         expect(json_response).to have_key('error')
         expect(json_response['error']).to eq('Invalid Email or password.')

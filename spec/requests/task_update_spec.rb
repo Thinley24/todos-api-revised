@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Task Update', type: :request do
@@ -16,8 +18,6 @@ RSpec.describe 'Task Update', type: :request do
       }
     end
     context 'when user is the creator of the task' do
-
-
       before { sign_in user }
 
       it 'updates the task and returns a JSON response with a status of 200' do
@@ -42,4 +42,3 @@ RSpec.describe 'Task Update', type: :request do
     end
   end
 end
-
