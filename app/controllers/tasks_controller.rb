@@ -28,6 +28,7 @@ class TasksController < ApplicationController
       :status,
       :creator_id,
       :assignee_id,
+      :parent_task_id,
       subtasks_attributes: %i[title description due_date status creator_id assignee_id]
     )
   end
