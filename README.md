@@ -1,22 +1,14 @@
-# README
+# Description
+This is PR for user authentication feature. For authentication *Devise* gem was used for the ease and robustness of the application.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Test Coverage
+96.2%
 
-Things you may want to cover:
 
-* Ruby version
 
-* System dependencies
 
-* Configuration
 
-* Database creation
 
-* Database initialization
+_Authentication covered (sign_in, sign_up)_
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
