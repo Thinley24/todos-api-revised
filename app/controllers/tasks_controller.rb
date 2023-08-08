@@ -1,21 +1,43 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: %i[index show]
+  before_action :set_task, only: %i[show update destroy]
 
   def index
-    # @task = current_user.tasks
     @pagy, @tasks = pagy(load_tasks)
     render json: { tasks: @tasks, meta: @pagy }
   end
 
+  def show
+    authorize @task
+    render json: @task
+  end
+
   def create
     @task = Task.new(task_params)
+    authorize @task
     if @task.save
       created_response(@task)
     else
       error_response(@task.errors.full_messages)
     end
+  end
+
+  rescue_from Pundit::NotAuthorizedError, with: :unauthorized_user
+  def update
+    authorize @task
+    if @task.update(task_params)
+      render json: @task
+    else
+      render json: { errors: @task.errors.full_messages.join(', ') }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    authorize @task
+    @task.destroy
+    head :no_content
   end
 
   private
@@ -33,6 +55,14 @@ class TasksController < ApplicationController
     )
   end
 
+  def set_task
+    @task = Task.find(params[:id])
+  end
+
+  def unauthorized_user(exception)
+    render json: { error: exception.message }, status: :forbidden
+  end
+  
   def load_tasks
     Task.includes(:creator, :assignee, :parent_task, :subtasks).all
   end
